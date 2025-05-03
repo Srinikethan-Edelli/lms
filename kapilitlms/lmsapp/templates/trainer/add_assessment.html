@@ -1,0 +1,87 @@
+{% extends 'trainer/trainer_dashboard.html' %}
+
+{% block content %}
+<h2>Add Assessment</h2>
+
+<form method="POST" action="{% url 'add_assessment' %}">
+    {% csrf_token %}
+    <div>
+        <label for="assessment_type">Assessment Type:</label>
+        <div>
+            <input type="radio" id="mcq" name="assessment_type" value="MCQ" required>
+            <label for="mcq">MCQ</label>
+
+            <input type="radio" id="program" name="assessment_type" value="Program" required>
+            <label for="program">Program</label>
+
+            <input type="radio" id="both" name="assessment_type" value="Both" required>
+            <label for="both">Both</label>
+        </div>
+    </div>
+
+    <!-- Common number of questions field -->
+    <div id="number_of_questions_field" style="display:none;">
+        <label for="number_of_questions">Number of Questions:</label>
+        <input type="number" id="number_of_questions" name="number_of_questions">
+    </div>
+
+    <!-- MCQ & Program Question Fields -->
+    <div id="mcq_field" style="display:none;">
+        <label for="number_of_mcq">Number of MCQ Questions:</label>
+        <input type="number" id="number_of_mcq" name="number_of_mcq">
+    </div>
+
+    <div id="program_field" style="display:none;">
+        <label for="number_of_programs">Number of Program Questions:</label>
+        <input type="number" id="number_of_programs" name="number_of_programs">
+    </div>
+
+    <div>
+        <label for="assessment_name">Assessment Name:</label>
+        <input type="text" id="assessment_name" name="assessment_name" value="{{ next_assessment_number }}" required>
+    </div>
+
+    
+
+    <button type="submit">Add Assessment</button>
+</form>
+
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<script>
+    // Get all the radio buttons for assessment type
+    const assessmentTypeRadios = document.querySelectorAll('input[name="assessment_type"]');
+    
+    // Get the common fields and specific fields for MCQ and Program
+    const mcqField = document.getElementById('mcq_field');
+    const programField = document.getElementById('program_field');
+    const numberOfQuestionsField = document.getElementById('number_of_questions_field');
+    
+    // Add event listeners for each radio button
+    assessmentTypeRadios.forEach(radio => {
+        radio.addEventListener('change', function () {
+            // Hide all the fields by default
+            numberOfQuestionsField.style.display = 'none';
+            mcqField.style.display = 'none';
+            programField.style.display = 'none';
+
+            // Show the fields based on selected radio button
+            if (document.getElementById('mcq').checked) {
+                numberOfQuestionsField.style.display = 'block'; // Show number_of_questions
+            } else if (document.getElementById('program').checked) {
+                numberOfQuestionsField.style.display = 'block'; // Show number_of_questions
+            } else if (document.getElementById('both').checked) {
+                mcqField.style.display = 'block'; // Show number_of_mcq
+                programField.style.display = 'block'; // Show number_of_programs
+            }
+        });
+    });
+</script>
+
+{% endblock %}

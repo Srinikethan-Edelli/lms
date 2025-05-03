@@ -1,0 +1,61 @@
+{% extends 'trainer/trainer_dashboard.html' %}
+
+{% block content %}
+    <h2>Assessment Name: {{ assessment.assessment_name }}</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- Display selected assessment details -->
+        <p>Assessment Type: {{ assessment.assessment_type }}</p>
+        <p>Number of Questions: {{ assessment.number_of_questions }}</p>
+
+        <!-- Hidden input to pass the selected assessment ID -->
+        <input type="hidden" name="assessment_id" value="{{ assessment.id }}">
+
+        <label for="assessment_date">Assessment Date:</label>
+        <input type="date" id="assessment_date" name="assessment_date" required>
+
+        <label for="assessment_duration">Assessment Duration:</label>
+        <input type="time" id="assessment_duration" name="assessment_duration" required>
+
+        {% if assessment.assessment_type == "MCQ" %}
+            <h3>Enter the Questions</h3>
+            
+            {% for i in assessment_questions %}
+                <fieldset>
+                    <legend>Question {{ i }}</legend>
+
+                    <label for="question_{{ i }}">Question Text:</label>
+                    <input type="text" name="question_{{ i }}" id="question_{{ i }}" required>
+
+                    <label for="file_{{ i }}">Upload Question File (Optional):</label>
+                    <input type="file" name="file_{{ i }}" id="file_{{ i }}">
+
+                    <br><br>
+
+                    <label for="option_a_{{ i }}">Option A:</label>
+                    <input type="text" name="option_a_{{ i }}" id="option_a_{{ i }}" required>
+
+                    <label for="option_b_{{ i }}">Option B:</label>
+                    <input type="text" name="option_b_{{ i }}" id="option_b_{{ i }}" required>
+
+                    <label for="option_c_{{ i }}">Option C:</label>
+                    <input type="text" name="option_c_{{ i }}" id="option_c_{{ i }}" required>
+
+                    <label for="option_d_{{ i }}">Option D:</label>
+                    <input type="text" name="option_d_{{ i }}" id="option_d_{{ i }}" required>
+
+                    <br><br>
+
+                    <label for="answer_{{ i }}">Answer:</label>
+                    <input type="text" name="answer_{{ i }}" id="answer_{{ i }}" required>
+                </fieldset>
+                <br>
+            {% endfor %}
+        {% endif %}
+        
+        <button type="submit">Add Assessment Paper</button>
+    </form>
+
+{% endblock %}

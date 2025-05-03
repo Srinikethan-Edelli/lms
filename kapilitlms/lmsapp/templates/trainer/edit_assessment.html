@@ -1,0 +1,46 @@
+{% extends 'trainer/trainer_dashboard.html' %}
+
+{% block content %}
+<h2>Edit Assessment: {{ assessment.assessment_name }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <label for="assessment_type">Assessment Type:</label>
+    <select name="assessment_type" id="assessment_type">
+        <option value="MCQ" {% if assessment.assessment_type == "MCQ" %}selected{% endif %}>MCQ</option>
+        <option value="Program" {% if assessment.assessment_type == "Program" %}selected{% endif %}>Program</option>
+        <option value="Both" {% if assessment.assessment_type == "Both" %}selected{% endif %}>Both</option>
+    </select>
+
+    <div id="mcq-questions" {% if assessment.assessment_type != "MCQ" %}style="display:none;"{% endif %}>
+        <label for="number_of_mcq">Number of MCQ Questions:</label>
+        <input type="text" name="number_of_questions" id="number_of_questions" value="{{ assessment.number_of_questions }}">
+    </div>
+
+    <div id="program-questions" {% if assessment.assessment_type != "Program" %}style="display:none;"{% endif %}>
+        <label for="number_of_programs">Number of Program Questions:</label>
+        <input type="text" name="number_of_questions" id="number_of_questions" value="{{ assessment.number_of_questions }}">
+    </div>
+
+    <div id="both-questions" {% if assessment.assessment_type != "Both" %}style="display:none;"{% endif %}>
+        <label for="number_of_mcq">Number of MCQs:</label>
+        <input type="text" name="number_of_mcq" id="number_of_mcq" value="{{ assessment.number_of_mcq }}">
+
+        <label for="number_of_programs">Number of Programs:</label>
+        <input type="text" name="number_of_programs" id="number_of_programs" value="{{ assessment.number_of_programs }}">
+    </div>
+
+    <button type="submit">Update Assessment</button>
+</form>
+
+<script>
+    document.getElementById('assessment_type').addEventListener('change', function () {
+        const type = this.value;
+        document.getElementById('mcq-questions').style.display = type === 'MCQ' ? 'block' : 'none';
+        document.getElementById('program-questions').style.display = type === 'Program' ? 'block' : 'none';
+        document.getElementById('both-questions').style.display = type === 'Both' ? 'block' : 'none';
+    });
+</script>
+
+{% endblock %}

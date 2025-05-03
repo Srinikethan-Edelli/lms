@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> Trainer Registration</title>
+    </head>
+    <body>
+{% extends 'manager/manager_dashboard.html' %}
+{% load static %}
+{% block content %}
+<h2>Add a New Trainer</h2>
+
+<form method="POST" action="{% url 'add_trainer' %}">
+    {% csrf_token %}
+    <div>
+        <label for="name">Trainer Name:</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+        <label for="email">Trainer Email:</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    <div>
+        <label for="employee_id">Employee ID:</label>
+        <input type="text" id="employee_id" name="employee_id" required>
+    </div>
+    <div>
+        <label for="courses">Course:</label>
+        <select id="courses" name="course">
+            <option value="Python Full Stack">Python Full Stack</option>
+            <option value="Java Full Stack">Java Full Stack</option>
+            <option value="Data Science">Data Science</option>
+            <option value="Data Analytics">Data Analytics</option>
+            <option value="DevOps cum AWS">DevOps cum AWS</option>
+            <option value="Cyber Security">Cyber Security</option>
+            <option value="Communication">Communication</option>
+            <option value="Aptitude">Aptitude</option>
+        </select>
+    </div>
+    <div id="checkboxes">
+        <h3>Subjects:</h3>
+        <div id="subjectCheckboxes"></div>
+
+    </div>
+
+    <div>
+        <label for="status">Active Status:</label>
+        <input type="checkbox" id="status" name="status" checked>
+    </div>
+    <button type="submit">Add Trainer</button>
+</form>
+
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+<script src="{% static 'js/trainer.js' %}" defer></script>
+
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+{% extends 'manager/manager_dashboard.html' %}
+
+{% block content %}
+<h2>View Trainers</h2>
+
+{% if trainers %}
+    <table class="trainers-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Employee ID</th>
+                <th>Course</th>
+                <th>Status</th>
+                <th>Actions</th> <!-- Actions column -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for trainer in trainers %}
+                <tr>
+                    <td>{{ trainer.name }}</td>
+                    <td>{{ trainer.email }}</td>
+                    <td>{{ trainer.employee_id }}</td>
+                    <td>{{ trainer.course }}</td>
+                    <td>
+                        {% if trainer.status %}
+                            Active
+                        {% else %}
+                            Inactive
+                        {% endif %}
+                    </td>
+                    <td>
+                        <!-- Edit Icon -->
+                        <a href="{% url 'edit_trainer' trainer.id %}" class="edit-icon" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+
+                        <!-- Delete Icon -->
+                        <a href="{% url 'delete_trainer' trainer.id %}" class="delete-icon" title="Delete" onclick="return confirm('Are you sure you want to delete the trainer: {{ trainer.name }}?');">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No trainers available.</p>
+{% endif %}
+
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

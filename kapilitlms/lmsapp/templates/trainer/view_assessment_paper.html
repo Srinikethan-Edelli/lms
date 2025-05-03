@@ -1,0 +1,52 @@
+{% extends 'trainer/trainer_dashboard.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="my-4">Assessment Paper Details</h2>
+
+        <p><strong>Assessment Name:</strong> {{ assessment_details.assessment_name }}</p>
+        <p><strong>Assessment Date:</strong> {{ assessment_details.assessment_date }}</p>
+        <p><strong>Duration:</strong> {{ assessment_details.assessment_duration }}</p>
+        <p><strong>Course Name:</strong> {{ assessment_details.course_name }}</p>
+        <p><strong>Created By:</strong> {{ assessment_details.created_by }}</p>
+        <p><strong>Added On:</strong> {{ assessment_details.added_on }}</p>
+
+        <h3 class="mt-4">Questions</h3>
+        <ul>
+            {% for question in assessment_details.questions %}
+                <li>
+                    <p><strong>Question {{ forloop.counter }}:</strong> {{ question.question_text }}</p>
+                    <p><strong>Options:</strong></p>
+
+                    {% if assessment_details.question_files %}
+                        {% for file in assessment_details.question_files %}
+                            <p><strong>File:</strong> 
+                                <!-- Render the image using the static tag -->
+                                <img src="{% static file %}" alt="Question File" class="img-fluid" />
+                            </p>
+                        {% endfor %}
+                    {% else %}
+                        <p><strong>File:</strong> No file uploaded</p>
+                    {% endif %}
+
+                    <ul>
+                        <li>A: {{ question.option_a }}</li>
+                        <li>B: {{ question.option_b }}</li>
+                        <li>C: {{ question.option_c }}</li>
+                        <li>D: {{ question.option_d }}</li>
+                    </ul>
+                    <p><strong>Answer:</strong> {{ question.answer }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <p><strong>Status:</strong> 
+            {% if assessment_details.status %} 
+                <span class="text-success">Active</span> 
+            {% else %} 
+                <span class="text-danger">Inactive</span> 
+            {% endif %}
+        </p>
+    </div>
+{% endblock %}

@@ -1,0 +1,65 @@
+/* Table styling */
+.trainers-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.trainers-table th, .trainers-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.trainers-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+/* Action icons styling */
+.edit-icon, .delete-icon {
+    text-decoration: none;
+    margin-right: 10px;
+    color: #555;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.edit-icon:hover {
+    color: #4CAF50; /* Green color on hover */
+}
+
+.delete-icon:hover {
+    color: #f44336; /* Red color on hover */
+}
+
+/* Tooltip for icons */
+.edit-icon[title], .delete-icon[title] {
+    position: relative;
+}
+
+.edit-icon[title]:after, .delete-icon[title]:after {
+    content: attr(title);
+    position: absolute;
+    background-color: #333;
+    color: white;
+    padding: 5px;
+    font-size: 12px;
+    border-radius: 3px;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.edit-icon:hover:after, .delete-icon:hover:after {
+    opacity: 1;
+}
+
+/* Style for no trainers available message */
+p {
+    font-size: 18px;
+    color: #888;
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+</head>
+<body>
+    <h2>Student Sign Up</h2>
+
+    <!-- Display Messages -->
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Student Name:</label><br>
+        <input type="text" name="StudentName" required><br><br>
+
+        <label>Qualification:</label><br>
+        <input type="text" name="Qualification" required><br><br>
+
+        <label>Select Branch:</label><br>
+        <input type="text" name="Select_Branch" required><br><br>
+
+        <label>College Name:</label><br>
+        <input type="text" name="College_Name" required><br><br>
+
+        <label>Select Current Year:</label><br>
+        <input type="number" name="Select_Current_Year" required><br><br>
+
+        <label>Mobile:</label><br>
+        <input type="text" name="Mobile" required><br><br>
+
+        <label>Email:</label><br>
+        <input type="email" name="Email" required><br><br>
+
+        <label>Password:</label><br>
+        <input type="password" name="Password" required><br><br>
+
+        <label>Confirm Password:</label><br>
+        <input type="password" name="Confirm_password" required><br><br>
+
+        <label>Select Course from our Organization:</label><br>
+        <input type="text" name="Select_Course_from_our_organization" required><br><br>
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+</body>
+</html>

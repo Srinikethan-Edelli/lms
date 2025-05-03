@@ -1,0 +1,51 @@
+{% extends 'manager/manager_dashboard.html' %}
+
+{% block content %}
+<h2>Edit Trainer</h2>
+
+<form method="POST" action="{% url 'edit_trainer' trainer.id %}">
+    {% csrf_token %}
+    
+    <div>
+        <label for="name">Trainer Name:</label>
+        <input type="text" id="name" name="name" value="{{ trainer.name }}" required>
+    </div>
+    
+    <div>
+        <label for="email">Trainer Email:</label>
+        <input type="email" id="email" name="email" value="{{ trainer.email }}" required>
+    </div>
+    
+    <div>
+        <label for="employee_id">Employee ID:</label>
+        <input type="text" id="employee_id" name="employee_id" value="{{ trainer.employee_id }}" required>
+    </div>
+    
+    <div>
+        <label for="course">Course:</label>
+        <select id="course" name="course">
+            <option value="Python Programming" {% if trainer.course == 'Python Programming' %}selected{% endif %}>Python Programming</option>
+            <option value="Java Programming" {% if trainer.course == 'Java Programming' %}selected{% endif %}>Java Programming</option>
+            <option value="Data Science" {% if trainer.course == 'Data Science' %}selected{% endif %}>Data Science</option>
+            <option value="Data Analytics" {% if trainer.course == 'Data Analytics' %}selected{% endif %}>Data Analytics</option>
+            <option value="DevOps cum AWS" {% if trainer.course == 'DevOps cum AWS' %}selected{% endif %}>DevOps cum AWS</option>
+            <option value="Cyber Security" {% if trainer.course == 'Cyber Security' %}selected{% endif %}>Cyber Security</option>
+            <option value="Communication" {% if trainer.course == 'Communication' %}selected{% endif %}>Communication</option>
+            <option value="Aptitude" {% if trainer.course == 'Aptitude' %}selected{% endif %}>Aptitude</option>
+        </select>
+    </div>
+
+    
+
+    <button type="submit">Update Trainer</button>
+</form>
+
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}

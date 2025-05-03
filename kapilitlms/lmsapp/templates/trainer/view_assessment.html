@@ -1,0 +1,73 @@
+{% extends 'trainer/trainer_dashboard.html' %}
+
+{% block content %}
+<h2>View Assessments</h2>
+
+{% if assessments %}
+    <table class="assessments-table">
+        <thead>
+            <tr>
+                <th>Assessment Name</th>
+                <th>Assessment Type</th>
+                <th>No. of Questions</th>
+                <th>No. of MCQs</th>
+                <th>No. of Programs</th>
+                <th>Status</th>
+                <th>Created By</th>
+                <th>Added On</th>
+                <th>Actions</th>
+                <th>Add Paper</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for assessment in assessments %}
+                <tr>
+                    <td>{{ assessment.assessment_name }}</td>
+                    <td>{{ assessment.assessment_type }}</td>
+                    <td>{{ assessment.number_of_questions }}</td>
+                    <td>{{ assessment.number_of_mcq }}</td>
+                    <td>{{ assessment.number_of_programs }}</td>
+                    <td>{{ assessment.assessment_status }}</td>
+                    <td>{{ assessment.created_by }}</td>
+                    <td>{{ assessment.added_on }}</td>
+                    <td>
+                        <!-- Add action buttons or links here -->
+                        <a href="{% url 'edit_assessment' assessment.id %}" class="btn btn-primary">Edit</a>
+                        <a href="{% url 'delete_assessment' assessment.id %}" class="delete-icon" title="Delete" 
+                       onclick="return confirm('Are you sure you want to delete the assessment: {{ assessment.assessment_name }}?');">
+                        Delete
+                    </a>
+
+                    </td>
+
+                    <td>
+                        {% if assessment.paper_added_status == 0 %}
+                        <a href="{% url 'add_assessment_paper' assessment.id %}" class="btn btn-danger">Add</a>
+                        {% else %}
+                        <p>added</p>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if assessment.paper_added_status == 1 %}
+                        <a href="{% url 'view_assessment_paper' assessment.id %}" class="btn btn-danger">view</a>
+                        {% else %}
+                        <p>not added</p>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No assessments available.</p>
+{% endif %}
+
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

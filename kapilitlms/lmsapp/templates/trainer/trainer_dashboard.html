@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Dashboard</title> 
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/trainer_dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/view_trainers.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Trainer Dashboard</h2>
+        </div>
+        <ul>
+            <li><a href="{% url 'trainer_dashboard' %}">Dashboard</a></li>
+            <li><a href="">View Students</a></li>
+            <li><a href="{% url 'add_assessment' %}">Add Assessment</a></li>
+            <li><a href="{% url 'view_assessment' %}">View Assessment</a></li>
+            <li><a href="">View Results</a></li>
+            <li><a href="{% url 'trainer_logout' %}">Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Main content area -->
+    <div class="content">
+        
+        <!-- Top Navbar -->
+        <div class="top-navbar">
+            <div class="email-display">
+                <p>Course: {{ trainer.course }}</p>
+                <p>Email: {{ trainer.email }}</p>
+            </div>
+        </div>
+
+        {% block content %}
+        <h3>Total Students: {{ students_count }}</h3>
+        <h3>Total Assessments: {{ assessments_count }}</h3>
+        {% endblock %}
+        
+    </div>
+
+</body>
+</html>
